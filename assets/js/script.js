@@ -11,22 +11,33 @@ var special = characters[3];
 
 //function that requests a length and returns n as a parsed int
 var getLength = function() {
+  //define min and max password lengths
+  var minLength = 8;
+  var maxLength = 128;
+  //ask for desired length
   var n = window.prompt("Please enter desired password length (8-128 characters).");
+  //turn length into an integer
   n = parseInt(n);
+  //if length is not an integer, or is out of the declared bounds, re-run the function
+  if (!Number.isInteger(n) || n > maxLength || n < minLength) {
+    window.alert("Please enter a valid response.");
+    n = getLength();
+  }
   return n;
 }
 
 //function that returns a random password, given proper inputs
 var generatePassword = function() {
+  //define initial local variables
   var password = "";
-  var types = characters;
-  //password criteria: length (8-128 characters), types (lowercase, uppercase, numeric, special), ensure at least 1 type
-  //is selected, and that each prompt is confirmed
-  var n = getLength();
-  while (!Number.isInteger(n) || n > 128 || n < 8) {
-    window.alert("Please enter a valid response.");
+  var confirmLength = false;
+  //while cancelled, acquire desired length, then confirm desired length
+  while (!confirmLength) {
     n = getLength();
+    confirmLength = window.confirm("The length of your password will be " + n + " characters.");
   }
+  //password criteria: types (lowercase, uppercase, numeric, special), ensure at least 1 type is selected, and that each prompt is confirmed
+  var types = characters;
   
   //for each unit of length of the password
   for (let i = 0; i < n; i++) {
