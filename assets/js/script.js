@@ -34,20 +34,24 @@ var getLength = function() {
 
 //function that requests a type and returns an array of types and the names of the chosen types
 var getTypes = function() {
-  var types = [];
-  var typeNames = "";
+  //create an array to pass 0: array of types 1: names of types
+  var typeArray = [[],""]
   //for each type of character
   for (let i = 0; i < characters.length; i++) {
     //check if the user wants the type of character
     var nTypeConfirm = window.confirm("Would you like your password to contain " + characters[i].name + " characters?");
-    //if they do, add it to the types array
+    //if they do, add it to the typeArray
     if (nTypeConfirm) {
-      types.push(characters[i].set);
-      typeNames += (characters[i].name + ", ")
+      typeArray[0].push(characters[i].set);
+      typeArray[1] += (characters[i].name + ", ");
     }
   }
-  typeNames = typeNames.substring(0, typeNames.length - 2);
-  return [types, typeNames];
+  //check the length of the array of types to ensure there is at least 1 type, if not, request again
+  if (typeArray[0].length < 1) {
+    window.alert("Please enter a valid response.");
+    typeArray = getTypes();
+  }
+  return typeArray;
 }
 
 //function that returns a random password, given proper inputs
@@ -66,7 +70,10 @@ var generatePassword = function() {
   while (!confirmTypes) {
     window.alert("Please select which character types you would like to include in your password.");
     var typeArray = getTypes();
-    confirmTypes = window.confirm("Your chosen types are: " + typeArray[1] + ".");
+    //remove the ", " from the end of the string
+    var typeNames = typeArray[1].substring(0, typeArray[1].length - 2);
+    //confirm the types
+    confirmTypes = window.confirm("Your chosen types are: " + typeNames + ".");
   }
   //once the types are confirmed, set the types
   var types = typeArray[0];
