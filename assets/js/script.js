@@ -8,13 +8,25 @@ var lowerCase = characters[0];
 var upperCase = characters[1];
 var numeric = characters[2];
 var special = characters[3];
-          
+
+//function that requests a length and returns n as a parsed int
+var getLength = function() {
+  var n = window.prompt("Please enter desired password length (8-128 characters).");
+  n = parseInt(n);
+  return n;
+}
+
+//function that returns a random password, given proper inputs
 var generatePassword = function() {
+  var password = "";
+  var types = characters;
   //password criteria: length (8-128 characters), types (lowercase, uppercase, numeric, special), ensure at least 1 type
   //is selected, and that each prompt is confirmed
-  var password = "";
-  var n = 8;
-  var types = characters;
+  var n = getLength();
+  while (!Number.isInteger(n) || n > 128 || n < 8) {
+    window.alert("Please enter a valid response.");
+    n = getLength();
+  }
   
   //for each unit of length of the password
   for (let i = 0; i < n; i++) {
