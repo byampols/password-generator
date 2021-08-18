@@ -1,13 +1,19 @@
 // Assignment code here
-var characters = [["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"],
-                  ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"],
-                  ["0","1","2","3","4","5","6","7","8","9"],
-                  [" ","!",'"',"#","$","%","&","'","(",")","*","+",",","-",".","/",":",";","<","=",">","?","@","[","\\","]","^","_","`","{","|","}","~"]];
-
-var lowerCase = characters[0];
-var upperCase = characters[1];
-var numeric = characters[2];
-var special = characters[3];
+//define a global variable which contains objects including all sets of characters and their names as a descriptor
+var characters = [
+  {
+    name: "lower case",
+    set: ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"]
+  },{
+    name: "uppercase",
+    set: ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"]
+  },{
+    name: "numeric",
+    set: ["0","1","2","3","4","5","6","7","8","9"]
+  },{
+    name: "special",
+    set: [" ","!",'"',"#","$","%","&","'","(",")","*","+",",","-",".","/",":",";","<","=",">","?","@","[","\\","]","^","_","`","{","|","}","~"]
+  }];
 
 //function that requests a length and returns n as a parsed int
 var getLength = function() {
@@ -26,18 +32,51 @@ var getLength = function() {
   return n;
 }
 
+//function that requests a type and returns an array of types and the names of the chosen types
+var getTypes = function() {
+  //create an array to pass 0: array of types 1: names of types
+  var typeArray = [[],""]
+  //for each type of character
+  for (let i = 0; i < characters.length; i++) {
+    //check if the user wants the type of character
+    var nTypeConfirm = window.confirm("Would you like your password to contain " + characters[i].name + " characters?");
+    //if they do, add it to the typeArray
+    if (nTypeConfirm) {
+      typeArray[0].push(characters[i].set);
+      typeArray[1] += (characters[i].name + ", ");
+    }
+  }
+  //check the length of the array of types to ensure there is at least 1 type, if not, request again
+  if (typeArray[0].length < 1) {
+    window.alert("Please enter a valid response.");
+    typeArray = getTypes();
+  }
+  return typeArray;
+}
+
 //function that returns a random password, given proper inputs
 var generatePassword = function() {
-  //define initial local variables
+  //initialize local variables
   var password = "";
   var confirmLength = false;
+  var confirmTypes = false;
   //while cancelled, acquire desired length, then confirm desired length
   while (!confirmLength) {
-    n = getLength();
+    var n = getLength();
     confirmLength = window.confirm("The length of your password will be " + n + " characters.");
   }
-  //password criteria: types (lowercase, uppercase, numeric, special), ensure at least 1 type is selected, and that each prompt is confirmed
-  var types = characters;
+
+  //while cancelled, acquire desired types, then confirm types
+  while (!confirmTypes) {
+    window.alert("Please select which character types you would like to include in your password.");
+    var typeArray = getTypes();
+    //remove the ", " from the end of the string
+    var typeNames = typeArray[1].substring(0, typeArray[1].length - 2);
+    //confirm the types
+    confirmTypes = window.confirm("Your chosen types are: " + typeNames + ".");
+  }
+  //once the types are confirmed, set the types
+  var types = typeArray[0];
   
   //for each unit of length of the password
   for (let i = 0; i < n; i++) {
