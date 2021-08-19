@@ -9,7 +9,7 @@ A secure password generator which creates a random password based on certain cri
 
 Source: [github repository](https://github.com/byampols/password-generator).
 
-Deployed application [the deployed password generator](https://byampols.github.io/password-generator/).
+Deployed application: [the deployed password generator](https://byampols.github.io/password-generator/).
 
 ## Usage 
 
@@ -20,7 +20,7 @@ Deployed application [the deployed password generator](https://byampols.github.i
 * Confrim your selection
 * A password will be generated.
 
-[the password generator](assets/images/screenshot.png)
+[Image of the Password Generator](assets/images/screenshot.png)
 
 ## Credits
 
@@ -29,6 +29,6 @@ By The Coding Bootcamp: [Coding Bootcamp github profile](https://github.com/codi
 
 ## License
 
-[License](LICENSE.md)
+[License](LICENSE)
 
 © 2021 Trilogy Education Services, LLC, a 2U, Inc. brand. Confidential and Proprietary. All Rights Reserved.
